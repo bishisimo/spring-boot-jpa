@@ -1,8 +1,7 @@
 package me.bishisimo.springbootjpa.controller;
 
-import me.bishisimo.springbootjpa.entity.Course;
 import me.bishisimo.springbootjpa.entity.Grade;
-import me.bishisimo.springbootjpa.service.GradeService;
+import me.bishisimo.springbootjpa.repository.GradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,22 +13,22 @@ import java.util.Map;
 @RequestMapping("grade")
 public class GradeController {
     @Autowired
-    private GradeService gradeService;
+    private GradeRepository gradeRepository;
 
     @PostMapping("save")
     public Map<String,Object> save(@RequestBody Grade grade){
         Map<String,Object>respond=new HashMap<>();
-        gradeService.save(grade);
+        gradeRepository.save(grade);
         respond.put("Success",grade.getGradeId());
         return respond;
     }
     @GetMapping("getById")
     public List<Grade> getCourseById(@RequestParam(value = "studentId") Long id) {
-        return gradeService.findGradeByStudentId(id);
+        return gradeRepository.findGradeByStudentId(id);
     }
 
     @GetMapping("getByName")
     public List<Grade> getCourseByName(@RequestParam(value = "grade")float grade){
-        return gradeService.findGradeByGrade(grade);
+        return gradeRepository.findGradeByGrade(grade);
     }
 }
